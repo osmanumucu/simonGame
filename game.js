@@ -3,8 +3,13 @@ var gamepattern = [];
 var userClickedPattern = [];
 var level = 0;
 
+var started = false;
+
 $(document).keypress(function() {
-    nextSequence();
+    if (!started) {
+        nextSequence();
+        started = true;
+    }
 });
 
 function nextSequence() {
@@ -64,12 +69,20 @@ function checkAnswer(currentLevel) {
     } else {
 
         console.log("wrong")
-        playSound("sounds/wrong.mp3")
+        playSound("wrong")
         $("body").addClass("game-over")
         setTimeout(function() {
             $("body").removeClass("game-over")
         }, 200)
 
-        $("h1").text("Game Over, Press Any Key to Restart")
+        $("h1").text("Game Over, Press Any Key to Restart");
+        startOver();
     }
+}
+
+function startOver() {
+    level = 0;
+    gamepattern = [];
+    started = false;
+
 }
